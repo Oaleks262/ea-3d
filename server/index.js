@@ -74,4 +74,13 @@ async function startServer() {
   }
 }
 
-startServer();
+// For Vercel serverless
+if (process.env.VERCEL) {
+  initializeData().catch(console.error);
+} else {
+  // For local development
+  startServer();
+}
+
+// Export for Vercel
+export default app;

@@ -1,0 +1,8 @@
+node_modules
+.git
+.env
+*.log
+server/uploads/projects/thumbnails/*
+server/uploads/projects/previews/*
+server/uploads/temp/*
+!**/.gitkeep

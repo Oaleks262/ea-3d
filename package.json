@@ -1,0 +1,21 @@
+{
+  "name": "elizaveta-portfolio",
+  "version": "1.0.0",
+  "description": "Elizaveta Antoniuk - 3D Animator & Motion Designer Portfolio",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "keywords": [
+    "portfolio",
+    "3d-animation",
+    "motion-design"
+  ],
+  "author": "Elizaveta Antoniuk",
+  "license": "PRIVATE",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
