@@ -1,0 +1,134 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(123, 47, 247, 0.15) 0%,
+    var(--color-bg) 70%
+  );
+
+  &__canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: $spacing-5xl 0;
+  }
+
+  &__label {
+    display: inline-block;
+    padding: $spacing-xs $spacing-lg;
+    margin-bottom: $spacing-xl;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--color-text);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: $radius-full;
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-md);
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: clamp($font-size-4xl, 8vw, $font-size-7xl);
+    font-weight: $font-weight-black;
+    line-height: 1.1;
+    margin-bottom: $spacing-xl;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+    .gradient-text {
+      display: block;
+    }
+  }
+
+  &__subtitle {
+    font-size: clamp($font-size-lg, 2vw, $font-size-2xl);
+    color: var(--color-text-muted);
+    margin-bottom: $spacing-3xl;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-lg;
+    flex-wrap: wrap;
+  }
+
+  &__scroll-indicator {
+    position: absolute;
+    bottom: $spacing-2xl;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+    color: var(--color-text-muted);
+    font-size: $font-size-sm;
+
+    span {
+      display: block;
+      margin-top: $spacing-xs;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+
+  &__scroll-arrow {
+    font-size: $font-size-2xl;
+    margin-bottom: $spacing-xs;
+    color: var(--color-primary);
+  }
+}
+
+// Responsive
+@media (max-width: $bp-md) {
+  .hero {
+    &__content {
+      padding: $spacing-4xl 0;
+    }
+
+    &__label {
+      font-size: $font-size-xs;
+    }
+
+    &__buttons {
+      flex-direction: column;
+      width: 100%;
+
+      .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    &__scroll-indicator {
+      bottom: $spacing-lg;
+    }
+  }
+}
+
+@media (max-width: $bp-sm) {
+  .hero {
+    &__subtitle {
+      font-size: $font-size-base;
+    }
+  }
+}

@@ -1,0 +1,114 @@
+.contact {
+  background: linear-gradient(180deg, var(--color-bg) 0%, rgba(123, 47, 247, 0.05) 100%);
+
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-4xl;
+
+    .badge {
+      margin-bottom: $spacing-lg;
+    }
+  }
+
+  &__title {
+    font-size: clamp($font-size-3xl, 4vw, $font-size-5xl);
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__subtitle {
+    font-size: $font-size-lg;
+    color: var(--color-text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  &__form {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: $spacing-3xl;
+    background: var(--color-surface);
+    border: 1px solid rgba(123, 47, 247, 0.2);
+    border-radius: $radius-xl;
+    box-shadow: var(--shadow-lg);
+
+    @media (max-width: $bp-sm) {
+      padding: $spacing-xl;
+    }
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-lg;
+
+    @media (max-width: $bp-sm) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .form-error {
+    padding: $spacing-md;
+    margin-bottom: $spacing-lg;
+    background: rgba(255, 68, 68, 0.1);
+    border: 1px solid rgba(255, 68, 68, 0.3);
+    border-radius: $radius-md;
+    color: #ff4444;
+    font-size: $font-size-sm;
+  }
+
+  .input.error,
+  .textarea.error {
+    border-color: #ff4444;
+  }
+}
+
+.success-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-modal);
+  max-width: 400px;
+  width: 90%;
+
+  &__content {
+    padding: $spacing-3xl;
+    background: var(--color-surface);
+    border: 2px solid var(--color-primary);
+    border-radius: $radius-xl;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), var(--glow-primary);
+  }
+
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto $spacing-xl;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-5xl;
+    font-weight: $font-weight-black;
+    background: var(--gradient-main);
+    border-radius: 50%;
+    color: var(--color-text);
+    animation: scaleIn 0.5s ease-out;
+  }
+
+  h3 {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-md;
+    background: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  p {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+}

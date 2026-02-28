@@ -1,0 +1,204 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-navbar);
+  padding: $spacing-lg 0;
+  transition: all var(--transition-normal);
+
+  &--scrolled {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-sm);
+    padding: $spacing-md 0;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: transform var(--transition-fast);
+
+    img {
+      height: 70px;
+      width: auto;
+      filter: drop-shadow(0 0 10px rgba(123, 47, 247, 0.3));
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2xl;
+  }
+
+  &__link {
+    position: relative;
+    padding: $spacing-sm $spacing-md;
+    font-family: $font-heading;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-base;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 80%;
+      height: 2px;
+      background: var(--gradient-main);
+      border-radius: 2px;
+      transition: transform var(--transition-normal);
+    }
+
+    &:hover {
+      color: var(--color-text);
+    }
+
+    &--active {
+      color: var(--color-text);
+
+      &::after {
+        transform: translateX(-50%) scaleX(1);
+      }
+    }
+  }
+
+  // Burger Menu
+  &__burger {
+    position: relative;
+    width: 30px;
+    height: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+
+    span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--color-text);
+      border-radius: 2px;
+      transition: all var(--transition-normal);
+
+      &:nth-child(1) {
+        top: 0;
+      }
+
+      &:nth-child(2) {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      &:nth-child(3) {
+        bottom: 0;
+      }
+    }
+
+    &--open {
+      span:nth-child(1) {
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+      }
+
+      span:nth-child(2) {
+        opacity: 0;
+      }
+
+      span:nth-child(3) {
+        bottom: 50%;
+        transform: translateY(50%) rotate(-45deg);
+      }
+    }
+
+    &:hover span {
+      background: var(--color-primary);
+    }
+  }
+
+  // Mobile Menu
+  &__mobile {
+    position: fixed;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--glass-border);
+    padding: $spacing-xl;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-lg);
+
+    &--open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  }
+
+  &__mobile-link {
+    position: relative;
+    padding: $spacing-md;
+    font-family: $font-heading;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-lg;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-text-muted);
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border-left: 3px solid transparent;
+
+    &:hover {
+      color: var(--color-text);
+      background: rgba(123, 47, 247, 0.05);
+      border-left-color: var(--color-primary);
+    }
+
+    &--active {
+      color: var(--color-text);
+      border-left-color: var(--color-primary);
+      background: rgba(123, 47, 247, 0.1);
+    }
+  }
+}
+
+// Responsive
+@media (max-width: $bp-md) {
+  .navbar {
+    &__logo img {
+      height: 40px;
+    }
+  }
+}

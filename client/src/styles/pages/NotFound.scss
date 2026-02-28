@@ -1,0 +1,98 @@
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(123, 47, 247, 0.15) 0%,
+    var(--color-bg) 70%
+  );
+  padding: $spacing-xl;
+
+  &__content {
+    text-align: center;
+    max-width: 600px;
+  }
+
+  &__shape {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto $spacing-4xl;
+    perspective: 1000px;
+
+    @media (max-width: $bp-sm) {
+      width: 150px;
+      height: 150px;
+    }
+  }
+
+  .shape-cube {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+  }
+
+  .cube-face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 2px solid var(--color-primary);
+    background: rgba(123, 47, 247, 0.1);
+    backdrop-filter: blur(10px);
+
+    @media (max-width: $bp-sm) {
+      width: 150px;
+      height: 150px;
+    }
+  }
+
+  .cube-front {
+    transform: rotateY(0deg) translateZ(100px);
+  }
+
+  .cube-back {
+    transform: rotateY(180deg) translateZ(100px);
+  }
+
+  .cube-right {
+    transform: rotateY(90deg) translateZ(100px);
+  }
+
+  .cube-left {
+    transform: rotateY(-90deg) translateZ(100px);
+  }
+
+  .cube-top {
+    transform: rotateX(90deg) translateZ(100px);
+  }
+
+  .cube-bottom {
+    transform: rotateX(-90deg) translateZ(100px);
+  }
+
+  &__title {
+    font-size: clamp($font-size-6xl, 15vw, 150px);
+    font-weight: $font-weight-black;
+    background: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__subtitle {
+    font-size: clamp($font-size-2xl, 4vw, $font-size-4xl);
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__text {
+    font-size: $font-size-lg;
+    color: var(--color-text-muted);
+    margin-bottom: $spacing-3xl;
+    line-height: 1.8;
+  }
+}

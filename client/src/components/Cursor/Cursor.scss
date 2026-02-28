@@ -1,0 +1,69 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+  mix-blend-mode: difference;
+
+  &__dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    pointer-events: none;
+    transition: opacity var(--transition-fast);
+    box-shadow: 0 0 10px var(--color-primary);
+  }
+
+  &__ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    pointer-events: none;
+    transition:
+      width var(--transition-normal),
+      height var(--transition-normal),
+      border-color var(--transition-normal),
+      opacity var(--transition-fast);
+    opacity: 0.6;
+
+    &--hovered {
+      width: 60px;
+      height: 60px;
+      border-color: var(--color-accent);
+      opacity: 1;
+      box-shadow: 0 0 20px rgba(255, 47, 209, 0.4);
+    }
+  }
+}
+
+// Hide default cursor on hover-capable devices
+@media (hover: hover) {
+  body {
+    cursor: none;
+  }
+
+  a, button, input, textarea, select, [role="button"] {
+    cursor: none !important;
+  }
+
+  // Show default cursor on iframe (videos)
+  iframe {
+    cursor: auto !important;
+  }
+}
+
+// Show default cursor on touch devices
+@media (hover: none) {
+  .cursor {
+    display: none;
+  }
+}

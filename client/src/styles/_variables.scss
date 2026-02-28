@@ -1,0 +1,94 @@
+// Color System
+:root {
+  // Base Colors
+  --color-bg: #0B0B0F;
+  --color-surface: #14141B;
+  --color-primary: #7B2FF7;
+  --color-accent: #FF2FD1;
+
+  // Gradients
+  --gradient-main: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  --gradient-hover: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+
+  // Text Colors
+  --color-text: #FFFFFF;
+  --color-text-muted: rgba(255, 255, 255, 0.55);
+  --color-text-dark: rgba(255, 255, 255, 0.35);
+
+  // Effects
+  --glow-primary: 0 0 20px var(--color-primary), 0 0 60px rgba(123, 47, 247, 0.3);
+  --glow-accent: 0 0 20px var(--color-accent), 0 0 60px rgba(255, 47, 209, 0.3);
+
+  // Glassmorphism
+  --glass-bg: rgba(20, 20, 27, 0.6);
+  --glass-border: rgba(123, 47, 247, 0.2);
+
+  // Shadows
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  // Transitions
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.4s ease;
+  --transition-slow: 0.6s ease;
+
+  // Z-index layers
+  --z-cursor: 10000;
+  --z-navbar: 1000;
+  --z-modal: 9000;
+  --z-overlay: 8000;
+  --z-dropdown: 100;
+}
+
+// Typography
+$font-heading: 'Poppins', sans-serif;
+$font-body: 'Inter', sans-serif;
+
+$font-size-xs: 0.75rem;    // 12px
+$font-size-sm: 0.875rem;   // 14px
+$font-size-base: 1rem;     // 16px
+$font-size-lg: 1.125rem;   // 18px
+$font-size-xl: 1.25rem;    // 20px
+$font-size-2xl: 1.5rem;    // 24px
+$font-size-3xl: 2rem;      // 32px
+$font-size-4xl: 2.5rem;    // 40px
+$font-size-5xl: 3rem;      // 48px
+$font-size-6xl: 4rem;      // 64px
+$font-size-7xl: 5rem;      // 80px
+
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+
+// Spacing
+$spacing-xs: 0.25rem;   // 4px
+$spacing-sm: 0.5rem;    // 8px
+$spacing-md: 1rem;      // 16px
+$spacing-lg: 1.5rem;    // 24px
+$spacing-xl: 2rem;      // 32px
+$spacing-2xl: 3rem;     // 48px
+$spacing-3xl: 4rem;     // 64px
+$spacing-4xl: 6rem;     // 96px
+$spacing-5xl: 8rem;     // 128px
+
+// Breakpoints
+$bp-xs: 480px;
+$bp-sm: 768px;
+$bp-md: 992px;
+$bp-lg: 1200px;
+$bp-xl: 1440px;
+
+// Border Radius
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+$radius-2xl: 24px;
+$radius-full: 9999px;
+
+// Container
+$container-max: 1280px;
+$container-padding: $spacing-xl;

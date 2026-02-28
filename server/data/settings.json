@@ -1,0 +1,25 @@
+{
+  "heroTitle": "ЄЛИЗАВЕТА АНТОНЮК",
+  "heroSubtitle": "Створюю високоякісні візуальні рішення",
+  "aboutBio": "Я пристрасна 3D аніматорка та motion дизайнерка з багаторічним досвідом створення приголомшливого візуального контенту для брендів та агенцій по всьому світу. Спеціалізуюся на втіленні ідей у життя через передову анімацію та дизайн.",
+  "stats": {
+    "projects": 47,
+    "clients": 32,
+    "years": 5
+  },
+  "socialLinks": {
+    "behance": "https://behance.net",
+    "instagram": "https://www.instagram.com/yelyzaveta_antoniuk/",
+    "linkedin": "https://www.linkedin.com/in/yelyzaveta-antoniuk-151285165/"
+  },
+  "colorPrimary": "#7B2FF7",
+  "colorAccent": "#FF2FD1",
+  "adminEmail": "admin@elizaveta.com",
+  "adminPasswordHash": "",
+  "smtp": {
+    "host": "",
+    "port": "587",
+    "user": "",
+    "password": ""
+  }
+}
