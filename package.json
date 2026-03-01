@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Elizaveta Antoniuk - 3D Animator & Motion Designer Portfolio",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "cd server && node index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd server && npm run dev",
     "client": "cd client && npm run dev",
+    "build": "cd client && npm run build",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install"
   },
   "keywords": [

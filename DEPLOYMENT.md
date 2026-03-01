@@ -28,23 +28,27 @@ sudo git clone https://github.com/Oaleks262/ea-3d.git
 sudo chown -R $USER:$USER ea-3d
 cd ea-3d
 
-# 5. Install dependencies
-npm run install-all
+# 5. Install dependencies (must be done on VPS so native modules compile for Linux)
+cd server && npm install
+cd ../client && npm install
+cd ..
 
 # 6. Create .env file
 cd server
 nano .env
 # Copy contents from .env.example and configure
+cd ..
 
 # 7. Build frontend
-cd ../client
-npm run build
-
-# 8. Start with PM2
+cd client && npm run build
 cd ..
-pm2 start npm --name "ea-portfolio" -- start
+
+# 8. Start with PM2 (runs only the server; server serves built client as static files)
+cd server
+pm2 start node --name "ea-portfolio" -- index.js
 pm2 save
 pm2 startup
+cd ..
 
 # 9. Configure Nginx
 sudo nano /etc/nginx/sites-available/ea-portfolio
@@ -110,11 +114,8 @@ pm2 delete ea-portfolio  # Remove from PM2
 ```bash
 cd /var/www/ea-3d
 git pull origin main
-cd client
-npm install
-npm run build
-cd ../server
-npm install
+cd server && npm install && cd ..
+cd client && npm install && npm run build && cd ..
 pm2 restart ea-portfolio
 ```
 
