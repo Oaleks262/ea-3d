@@ -1,6 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, lazy, Suspense } from 'react';
 import { motion, useInView } from 'framer-motion';
 import './About.scss';
+
+const AvatarScene = lazy(() => import('./AvatarScene'));
 
 function About({ settings }) {
   const sectionRef = useRef(null);
@@ -139,9 +141,15 @@ function About({ settings }) {
           <motion.div className="about__visual" variants={itemVariants}>
             <div className="about__avatar-frame">
               <div className="about__avatar-glow"></div>
-              <div className="about__avatar-content">
-                <div className="about__avatar-icon">EA</div>
-              </div>
+              {settings?.avatarModelUrl ? (
+                <Suspense fallback={null}>
+                  <AvatarScene modelUrl={settings.avatarModelUrl} />
+                </Suspense>
+              ) : (
+                <div className="about__avatar-content">
+                  <div className="about__avatar-icon">EA</div>
+                </div>
+              )}
             </div>
           </motion.div>
         </motion.div>
