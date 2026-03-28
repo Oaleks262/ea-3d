@@ -7,6 +7,7 @@ import axios from 'axios';
 function AdminSettings() {
   const [settings, setSettings] = useState({});
   const [newSkill, setNewSkill] = useState('');
+  const [newCategory, setNewCategory] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -84,6 +85,23 @@ function AdminSettings() {
     });
   };
 
+  const handleAddCategory = () => {
+    const trimmed = newCategory.trim();
+    if (!trimmed) return;
+    setSettings(prev => ({
+      ...prev,
+      projectCategories: [...(prev.projectCategories || []), trimmed]
+    }));
+    setNewCategory('');
+  };
+
+  const handleRemoveCategory = (index) => {
+    setSettings(prev => ({
+      ...prev,
+      projectCategories: (prev.projectCategories || []).filter((_, i) => i !== index)
+    }));
+  };
+
   const handleAddProcessStep = () => {
     setSettings(prev => ({
       ...prev,
@@ -131,6 +149,10 @@ function AdminSettings() {
       // Update CSS variables for colors
       document.documentElement.style.setProperty('--color-primary', settings.colorPrimary);
       document.documentElement.style.setProperty('--color-accent', settings.colorAccent);
+      if (settings.colorBackground) document.documentElement.style.setProperty('--color-bg', settings.colorBackground);
+      if (settings.colorSurface) document.documentElement.style.setProperty('--color-surface', settings.colorSurface);
+      if (settings.colorText) document.documentElement.style.setProperty('--color-text', settings.colorText);
+      if (settings.colorTextMuted) document.documentElement.style.setProperty('--color-text-muted', settings.colorTextMuted);
 
       // Gradients will update automatically since they use var(--color-primary) and var(--color-accent)
 
@@ -450,6 +472,86 @@ function AdminSettings() {
             + Додати крок
           </button>
 
+          <h3>Категорії проектів</h3>
+
+          <div className="form-group">
+            <small style={{ display: 'block', marginBottom: '0.75rem', color: '#888' }}>
+              Ці категорії відображаються як фільтри у портфоліо та у формі додавання проекту.
+            </small>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+              {(settings.projectCategories || []).map((cat, index) => (
+                <div
+                  key={index}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    padding: '0.3rem 0.7rem',
+                    background: 'rgba(123,47,247,0.15)',
+                    border: '1px solid rgba(123,47,247,0.4)',
+                    borderRadius: '20px',
+                    fontSize: '0.875rem'
+                  }}
+                >
+                  <span>{cat}</span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveCategory(index)}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#FF2FD1', fontWeight: 'bold', fontSize: '1rem', lineHeight: 1, padding: 0 }}
+                    aria-label={`Видалити ${cat}`}
+                  >×</button>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <input
+                type="text"
+                className="input"
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCategory(); } }}
+                placeholder="Назва категорії"
+                style={{ flex: 1 }}
+              />
+              <button type="button" className="btn btn-outline" onClick={handleAddCategory}>Додати</button>
+            </div>
+          </div>
+
+          <h3>Секція "Зв'яжіться"</h3>
+
+          <div className="form-group">
+            <label>Основний текст заголовку</label>
+            <input
+              type="text"
+              className="input"
+              value={settings.contactTitleMain || ''}
+              onChange={(e) => handleChange('contactTitleMain', e.target.value)}
+              placeholder="Створимо Щось"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Акцентний текст заголовку (градієнт)</label>
+            <input
+              type="text"
+              className="input"
+              value={settings.contactTitleAccent || ''}
+              onChange={(e) => handleChange('contactTitleAccent', e.target.value)}
+              placeholder="Дивовижне"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Підзаголовок</label>
+            <textarea
+              className="textarea"
+              rows="3"
+              value={settings.contactSubtitle || ''}
+              onChange={(e) => handleChange('contactSubtitle', e.target.value)}
+              placeholder="Маєте проєкт? Буду рада почути..."
+            ></textarea>
+          </div>
+
           <h3>Соціальні мережі</h3>
 
           <div className="form-group">
@@ -546,6 +648,31 @@ function AdminSettings() {
             <small>Для Gmail використовуйте App Password (пароль програми), не основний пароль</small>
           </div>
 
+          <h3>Футер</h3>
+
+          <div className="form-group">
+            <label>Tagline (підпис під логотипом)</label>
+            <input
+              type="text"
+              className="input"
+              value={settings.footerTagline || ''}
+              onChange={(e) => handleChange('footerTagline', e.target.value)}
+              placeholder="Створюю високоякісні візуальні рішення..."
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Copyright</label>
+            <input
+              type="text"
+              className="input"
+              value={settings.footerCopyright || ''}
+              onChange={(e) => handleChange('footerCopyright', e.target.value)}
+              placeholder="© {year} Ім'я. Усі права захищені."
+            />
+            <small>Використовуйте <code>{'{year}'}</code> для автоматичного поточного року</small>
+          </div>
+
           <h3>Колористика сайту</h3>
 
           <div className="form-row">
@@ -598,6 +725,40 @@ function AdminSettings() {
             fontWeight: 'bold'
           }}>
             Попередній перегляд градієнту
+          </div>
+
+          <div className="form-row" style={{ marginTop: '1.5rem' }}>
+            <div className="form-group">
+              <label>Колір фону сайту</label>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <input type="color" value={settings.colorBackground || '#0B0B0F'} onChange={(e) => handleChange('colorBackground', e.target.value)} style={{ width: '60px', height: '40px', cursor: 'pointer' }} />
+                <input type="text" className="input" value={settings.colorBackground || '#0B0B0F'} onChange={(e) => handleChange('colorBackground', e.target.value)} placeholder="#0B0B0F" />
+              </div>
+            </div>
+            <div className="form-group">
+              <label>Колір поверхонь (карти, форми)</label>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <input type="color" value={settings.colorSurface || '#14141B'} onChange={(e) => handleChange('colorSurface', e.target.value)} style={{ width: '60px', height: '40px', cursor: 'pointer' }} />
+                <input type="text" className="input" value={settings.colorSurface || '#14141B'} onChange={(e) => handleChange('colorSurface', e.target.value)} placeholder="#14141B" />
+              </div>
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Колір основного тексту</label>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <input type="color" value={settings.colorText || '#FFFFFF'} onChange={(e) => handleChange('colorText', e.target.value)} style={{ width: '60px', height: '40px', cursor: 'pointer' }} />
+                <input type="text" className="input" value={settings.colorText || '#FFFFFF'} onChange={(e) => handleChange('colorText', e.target.value)} placeholder="#FFFFFF" />
+              </div>
+            </div>
+            <div className="form-group">
+              <label>Колір другорядного тексту</label>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <input type="color" value={settings.colorTextMuted?.startsWith('#') ? settings.colorTextMuted : '#8888aa'} onChange={(e) => handleChange('colorTextMuted', e.target.value)} style={{ width: '60px', height: '40px', cursor: 'pointer' }} />
+                <input type="text" className="input" value={settings.colorTextMuted || 'rgba(255,255,255,0.55)'} onChange={(e) => handleChange('colorTextMuted', e.target.value)} placeholder="rgba(255,255,255,0.55)" />
+              </div>
+            </div>
           </div>
 
           <button type="submit" className="btn btn-primary" disabled={saving} style={{ marginTop: '2rem' }}>

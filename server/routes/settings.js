@@ -26,7 +26,17 @@ router.get('/', async (req, res) => {
       stats: settings.stats,
       socialLinks: settings.socialLinks,
       colorPrimary: settings.colorPrimary,
-      colorAccent: settings.colorAccent
+      colorAccent: settings.colorAccent,
+      colorBackground: settings.colorBackground,
+      colorSurface: settings.colorSurface,
+      colorText: settings.colorText,
+      colorTextMuted: settings.colorTextMuted,
+      contactTitleMain: settings.contactTitleMain,
+      contactTitleAccent: settings.contactTitleAccent,
+      contactSubtitle: settings.contactSubtitle,
+      footerTagline: settings.footerTagline,
+      footerCopyright: settings.footerCopyright,
+      projectCategories: settings.projectCategories
     };
 
     res.json(publicSettings);
