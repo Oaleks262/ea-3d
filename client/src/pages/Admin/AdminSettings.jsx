@@ -98,6 +98,29 @@ function AdminSettings() {
     }));
   };
 
+  const handleAvatarModelUpload = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    const formData = new FormData()
+    formData.append('file', file)
+
+    try {
+      const token = localStorage.getItem('adminToken')
+      const response = await axios.post('/api/upload/avatar-model', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      handleChange('avatarModelUrl', response.data.avatarModelUrl)
+      alert('3D модель завантажена успішно!')
+    } catch (error) {
+      console.error('Avatar model upload error:', error)
+      alert('Помилка завантаження моделі')
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -177,6 +200,37 @@ function AdminSettings() {
         <h1 className="admin-title">Налаштування</h1>
 
         <form onSubmit={handleSubmit} className="admin-form">
+          <h3>3D Аватар (секція "Про мене")</h3>
+
+          <div className="form-group">
+            <label>Поточна модель</label>
+            {settings.avatarModelUrl ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
+                <span style={{ color: '#4ade80', fontSize: '0.875rem' }}>✓ Модель завантажена: {settings.avatarModelUrl}</span>
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  style={{ padding: '0.25rem 0.75rem', fontSize: '0.8rem', color: '#FF2FD1' }}
+                  onClick={() => handleChange('avatarModelUrl', null)}
+                >
+                  Видалити
+                </button>
+              </div>
+            ) : (
+              <p style={{ color: '#888', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                Модель не завантажена. Відображається анімований плейсхолдер.
+              </p>
+            )}
+            <input
+              type="file"
+              accept=".glb,.gltf"
+              className="input"
+              onChange={handleAvatarModelUpload}
+              style={{ padding: '0.5rem' }}
+            />
+            <small>Формат: GLB або GLTF. Максимальний розмір: 50MB</small>
+          </div>
+
           <h3>Hero Секція</h3>
 
           <div className="form-group">

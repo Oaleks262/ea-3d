@@ -9,8 +9,6 @@ function Works() {
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('Усі');
 
-  const filters = ['Усі', '3D Анімація', 'Motion', 'Комерційні', 'Брендинг'];
-
   useEffect(() => {
     fetchProjects();
   }, []);
@@ -26,19 +24,13 @@ function Works() {
     }
   };
 
-  // Map Ukrainian filter names to English category names
-  const categoryMap = {
-    'Усі': 'All',
-    '3D Анімація': '3D Animation',
-    'Motion': 'Motion',
-    'Комерційні': 'Commercial',
-    'Брендинг': 'Branding'
-  };
+  const uniqueCategories = [...new Set(projects.map((p) => p.category).filter(Boolean))];
+  const filters = ['Усі', ...uniqueCategories];
 
   const filteredProjects =
     activeFilter === 'Усі'
       ? projects
-      : projects.filter((p) => p.category === categoryMap[activeFilter] || p.category === activeFilter);
+      : projects.filter((p) => p.category === activeFilter);
 
   return (
     <section id="works" className="works section">

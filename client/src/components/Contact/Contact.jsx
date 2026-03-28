@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { messagesAPI } from '../../utils/api';
 import './Contact.scss';
 
-function Contact() {
+function Contact({ settings }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -87,10 +87,11 @@ function Contact() {
         >
           <div className="badge">Зв'яжіться</div>
           <h2 className="contact__title">
-            Створимо Щось <span className="gradient-text">Дивовижне</span>
+            {settings?.contactTitleMain || 'Створимо Щось'}{' '}
+            <span className="gradient-text">{settings?.contactTitleAccent || 'Дивовижне'}</span>
           </h2>
           <p className="contact__subtitle">
-            Маєте проєкт? Буду рада почути про нього. Напишіть мені і обговоримо, як втілити вашу ідею в життя.
+            {settings?.contactSubtitle || 'Маєте проєкт? Буду рада почути про нього. Напишіть мені і обговоримо, як втілити вашу ідею в життя.'}
           </p>
         </motion.div>
 

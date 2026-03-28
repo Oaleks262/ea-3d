@@ -42,7 +42,7 @@ function Home() {
       <Works />
       <About settings={settings} />
       <Process settings={settings} />
-      <Contact />
+      <Contact settings={settings} />
       <Footer />
     </>
   );

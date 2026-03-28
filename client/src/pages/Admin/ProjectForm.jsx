@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { projectsAPI, uploadAPI } from '../../utils/api';
+import { projectsAPI, uploadAPI, settingsAPI } from '../../utils/api';
 
 function ProjectForm({ project, onClose, onSave }) {
   const [formData, setFormData] = useState({
@@ -16,6 +16,7 @@ function ProjectForm({ project, onClose, onSave }) {
     order: 0
   });
 
+  const [categories, setCategories] = useState(['3D Animation', 'Motion', 'Commercial', 'Branding']);
   const [toolInput, setToolInput] = useState('');
   const [thumbnailFile, setThumbnailFile] = useState(null);
   const [previewFile, setPreviewFile] = useState(null);
@@ -27,6 +28,11 @@ function ProjectForm({ project, onClose, onSave }) {
     if (project) {
       setFormData(project);
     }
+    settingsAPI.get().then(res => {
+      if (res.data.projectCategories?.length) {
+        setCategories(res.data.projectCategories);
+      }
+    }).catch(() => {});
   }, [project]);
 
   const handleChange = (field, value) => {
@@ -169,10 +175,9 @@ function ProjectForm({ project, onClose, onSave }) {
               value={formData.category}
               onChange={(e) => handleChange('category', e.target.value)}
             >
-              <option value="3D Animation">3D Анімація</option>
-              <option value="Motion">Motion</option>
-              <option value="Commercial">Комерційні</option>
-              <option value="Branding">Брендинг</option>
+              {categories.map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
             </select>
           </div>
 

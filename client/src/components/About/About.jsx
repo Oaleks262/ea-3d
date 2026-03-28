@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import AvatarScene from './AvatarScene';
 import './About.scss';
 
 function About({ settings }) {
@@ -135,13 +136,11 @@ function About({ settings }) {
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Avatar Placeholder */}
+          {/* Right Column - 3D Avatar */}
           <motion.div className="about__visual" variants={itemVariants}>
-            <div className="about__avatar-frame">
+            <div className="about__avatar-frame" style={{ position: 'relative', overflow: 'hidden' }}>
               <div className="about__avatar-glow"></div>
-              <div className="about__avatar-content">
-                <div className="about__avatar-icon">EA</div>
-              </div>
+              <AvatarScene modelUrl={settings?.avatarModelUrl || null} />
             </div>
           </motion.div>
         </motion.div>

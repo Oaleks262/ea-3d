@@ -55,6 +55,18 @@ function App() {
         if (settings.colorAccent) {
           document.documentElement.style.setProperty('--color-accent', settings.colorAccent);
         }
+        if (settings.colorBackground) {
+          document.documentElement.style.setProperty('--color-bg', settings.colorBackground);
+        }
+        if (settings.colorSurface) {
+          document.documentElement.style.setProperty('--color-surface', settings.colorSurface);
+        }
+        if (settings.colorText) {
+          document.documentElement.style.setProperty('--color-text', settings.colorText);
+        }
+        if (settings.colorTextMuted) {
+          document.documentElement.style.setProperty('--color-text-muted', settings.colorTextMuted);
+        }
       } catch (error) {
         console.error('Failed to load color settings:', error);
       }

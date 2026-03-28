@@ -123,6 +123,14 @@
     width: 100%;
     max-width: 400px;
     aspect-ratio: 1;
+    // Ensure the Three.js canvas fills the frame
+    canvas {
+      position: absolute;
+      inset: 0;
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 50%;
+    }
   }
 
   &__avatar-glow {

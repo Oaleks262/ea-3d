@@ -14,6 +14,7 @@ router.get('/', async (req, res) => {
 
     // Return public settings only (no sensitive data)
     const publicSettings = {
+      avatarModelUrl: settings.avatarModelUrl,
       heroTitle: settings.heroTitle,
       heroSubtitle: settings.heroSubtitle,
       aboutBio: settings.aboutBio,

@@ -29,7 +29,7 @@ function Footer() {
           <div className="footer__brand">
             <img src="/logo.png" alt="EA Logo" className="footer__logo" />
             <p className="footer__tagline">
-              Створюю високоякісні візуальні рішення через 3D анімацію та motion дизайн
+              {settings?.footerTagline || 'Створюю високоякісні візуальні рішення через 3D анімацію та motion дизайн'}
             </p>
           </div>
 
@@ -83,7 +83,9 @@ function Footer() {
         {/* Bottom Bar */}
         <div className="footer__bottom">
           <p className="footer__copyright">
-            © {currentYear} Єлизавета Антонюк. Усі права захищені.
+            {settings?.footerCopyright
+              ? settings.footerCopyright.replace('{year}', currentYear)
+              : `© ${currentYear} Єлизавета Антонюк. Усі права захищені.`}
           </p>
           <Link to="/privacy-policy" className="footer__link">
             Політика Конфіденційності

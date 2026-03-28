@@ -161,6 +161,46 @@ router.post('/preview', verifyToken, uploadPreview.single('file'), async (req, r
   }
 });
 
+// File filter for GLB/GLTF 3D models
+const modelFilter = (req, file, cb) => {
+  const ext = path.extname(file.originalname).toLowerCase()
+  if (['.glb', '.gltf'].includes(ext)) {
+    cb(null, true)
+  } else {
+    cb(new Error('Файл має бути у форматі GLB або GLTF'), false)
+  }
+}
+
+const uploadModel = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      const dir = path.join(__dirname, '../uploads/avatar')
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+      cb(null, dir)
+    },
+    filename: (req, file, cb) => {
+      cb(null, 'avatar' + path.extname(file.originalname).toLowerCase())
+    }
+  }),
+  fileFilter: modelFilter,
+  limits: { fileSize: 50 * 1024 * 1024 } // 50MB
+})
+
+/**
+ * POST /api/upload/avatar-model
+ * Upload GLB/GLTF 3D avatar model
+ */
+router.post('/avatar-model', verifyToken, uploadModel.single('file'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'Файл не завантажено' })
+    const avatarModelUrl = `/uploads/avatar/${req.file.filename}`
+    res.json({ success: true, avatarModelUrl })
+  } catch (error) {
+    console.error('Avatar model upload error:', error)
+    res.status(500).json({ error: 'Помилка завантаження моделі' })
+  }
+})
+
 /**
  * DELETE /api/upload/:type/:filename
  * Delete uploaded file
