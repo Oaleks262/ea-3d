@@ -48,7 +48,7 @@ function About({ settings }) {
     return () => timers.forEach(clearInterval);
   }, [isInView, stats]);
 
-  const skills = [
+  const skills = settings?.skills || [
     'Blender',
     'Cinema 4D',
     'After Effects',
@@ -92,8 +92,8 @@ function About({ settings }) {
             <div className="badge">Про мене</div>
 
             <h2 className="about__title">
-              Створюю Візуальні Історії Через{' '}
-              <span className="gradient-text">3D & Motion</span>
+              {settings?.aboutTitleMain || 'Створюю Візуальні Історії Через'}{' '}
+              <span className="gradient-text">{settings?.aboutTitleAccent || '3D & Motion'}</span>
             </h2>
 
             <p className="about__bio">

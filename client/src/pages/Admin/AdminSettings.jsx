@@ -6,6 +6,7 @@ import axios from 'axios';
 
 function AdminSettings() {
   const [settings, setSettings] = useState({});
+  const [newSkill, setNewSkill] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -55,6 +56,45 @@ function AdminSettings() {
     setSettings(prev => ({
       ...prev,
       smtp: { ...prev.smtp, [field]: value }
+    }));
+  };
+
+  const handleAddSkill = () => {
+    const trimmed = newSkill.trim();
+    if (!trimmed) return;
+    setSettings(prev => ({
+      ...prev,
+      skills: [...(prev.skills || []), trimmed]
+    }));
+    setNewSkill('');
+  };
+
+  const handleRemoveSkill = (index) => {
+    setSettings(prev => ({
+      ...prev,
+      skills: (prev.skills || []).filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleProcessStepChange = (index, field, value) => {
+    setSettings(prev => {
+      const steps = [...(prev.processSteps || [])];
+      steps[index] = { ...steps[index], [field]: value };
+      return { ...prev, processSteps: steps };
+    });
+  };
+
+  const handleAddProcessStep = () => {
+    setSettings(prev => ({
+      ...prev,
+      processSteps: [...(prev.processSteps || []), { title: '', description: '' }]
+    }));
+  };
+
+  const handleRemoveProcessStep = (index) => {
+    setSettings(prev => ({
+      ...prev,
+      processSteps: (prev.processSteps || []).filter((_, i) => i !== index)
     }));
   };
 
@@ -171,6 +211,89 @@ function AdminSettings() {
             ></textarea>
           </div>
 
+          <h3>Заголовок секції Про мене</h3>
+
+          <div className="form-group">
+            <label>Основний текст заголовку</label>
+            <input
+              type="text"
+              className="input"
+              value={settings.aboutTitleMain || ''}
+              onChange={(e) => handleChange('aboutTitleMain', e.target.value)}
+              placeholder="Створюю Візуальні Історії Через"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Акцентний текст заголовку (виділяється градієнтом)</label>
+            <input
+              type="text"
+              className="input"
+              value={settings.aboutTitleAccent || ''}
+              onChange={(e) => handleChange('aboutTitleAccent', e.target.value)}
+              placeholder="3D & Motion"
+            />
+          </div>
+
+          <h3>Навички</h3>
+
+          <div className="form-group">
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+              {(settings.skills || []).map((skill, index) => (
+                <div
+                  key={index}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    padding: '0.3rem 0.7rem',
+                    background: 'rgba(123,47,247,0.15)',
+                    border: '1px solid rgba(123,47,247,0.4)',
+                    borderRadius: '20px',
+                    fontSize: '0.875rem'
+                  }}
+                >
+                  <span>{skill}</span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveSkill(index)}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      color: '#FF2FD1',
+                      fontWeight: 'bold',
+                      fontSize: '1rem',
+                      lineHeight: 1,
+                      padding: 0
+                    }}
+                    aria-label={`Видалити ${skill}`}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <input
+                type="text"
+                className="input"
+                value={newSkill}
+                onChange={(e) => setNewSkill(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddSkill(); } }}
+                placeholder="Назва навички"
+                style={{ flex: 1 }}
+              />
+              <button
+                type="button"
+                className="btn btn-outline"
+                onClick={handleAddSkill}
+              >
+                Додати
+              </button>
+            </div>
+          </div>
+
           <h3>Статистика</h3>
 
           <div className="form-row">
@@ -204,6 +327,74 @@ function AdminSettings() {
               />
             </div>
           </div>
+
+          <h3>Процес</h3>
+
+          <div className="form-group">
+            <label>Заголовок секції</label>
+            <input
+              type="text"
+              className="input"
+              value={settings.processTitle || ''}
+              onChange={(e) => handleChange('processTitle', e.target.value)}
+              placeholder="Від Концепції до Реальності"
+            />
+          </div>
+
+          {(settings.processSteps || []).map((step, index) => (
+            <div
+              key={index}
+              style={{
+                padding: '1rem',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: '8px',
+                marginBottom: '1rem'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                <strong style={{ opacity: 0.7 }}>Крок {String(index + 1).padStart(2, '0')}</strong>
+                {(settings.processSteps || []).length > 1 && (
+                  <button
+                    type="button"
+                    className="btn btn-ghost"
+                    onClick={() => handleRemoveProcessStep(index)}
+                    style={{ padding: '0.25rem 0.75rem', fontSize: '0.8rem', color: '#FF2FD1' }}
+                  >
+                    Видалити
+                  </button>
+                )}
+              </div>
+              <div className="form-group">
+                <label>Назва</label>
+                <input
+                  type="text"
+                  className="input"
+                  value={step.title || ''}
+                  onChange={(e) => handleProcessStepChange(index, 'title', e.target.value)}
+                  placeholder="Назва кроку"
+                />
+              </div>
+              <div className="form-group">
+                <label>Опис</label>
+                <textarea
+                  className="textarea"
+                  rows="3"
+                  value={step.description || ''}
+                  onChange={(e) => handleProcessStepChange(index, 'description', e.target.value)}
+                  placeholder="Опис кроку"
+                ></textarea>
+              </div>
+            </div>
+          ))}
+
+          <button
+            type="button"
+            className="btn btn-outline"
+            onClick={handleAddProcessStep}
+            style={{ marginBottom: '1.5rem' }}
+          >
+            + Додати крок
+          </button>
 
           <h3>Соціальні мережі</h3>
 

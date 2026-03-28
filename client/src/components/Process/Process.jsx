@@ -2,32 +2,36 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import './Process.scss';
 
-function Process() {
+function Process({ settings }) {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
-  const steps = [
+  const fallbackSteps = [
     {
-      number: '01',
       title: 'Дослідження',
       description: 'Розуміння цілей проєкту, цільової аудиторії та збір візуальних референсів для створення міцного фундаменту.'
     },
     {
-      number: '02',
       title: 'Концепція',
       description: 'Розробка початкових ескізів, мудбордів та 3D блокаутів для візуалізації творчого напрямку.'
     },
     {
-      number: '03',
       title: 'Виробництво',
       description: 'Втілення концепції в життя через моделювання, текстурування, освітлення, анімацію та рендеринг.'
     },
     {
-      number: '04',
       title: 'Фінальна Обробка',
       description: 'Композитинг, колірна корекція, додавання VFX, звуковий дизайн та фінальний експорт для доставки.'
     }
   ];
+
+  const rawSteps = settings?.processSteps || fallbackSteps;
+  const steps = rawSteps.map((step, index) => ({
+    ...step,
+    number: String(index + 1).padStart(2, '0')
+  }));
+
+  const processTitle = settings?.processTitle || 'Від Концепції до Реальності';
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -59,7 +63,7 @@ function Process() {
         >
           <div className="badge">Мій Процес</div>
           <h2 className="process__title">
-            Від Концепції до <span className="gradient-text">Реальності</span>
+            {processTitle}
           </h2>
         </motion.div>
 

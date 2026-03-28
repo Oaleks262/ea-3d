@@ -41,7 +41,7 @@ function Home() {
       <Hero settings={settings} />
       <Works />
       <About settings={settings} />
-      <Process />
+      <Process settings={settings} />
       <Contact />
       <Footer />
     </>
